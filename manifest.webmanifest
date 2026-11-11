@@ -1,0 +1,1 @@
+{"name":"SimpMusic Web","short_name":"SimpMusic","description":"Unofficial SimpMusic browser adaptation","start_url":"./","scope":"./","display":"standalone","background_color":"#000000","theme_color":"#121212","icons":[{"src":"assets/icon.png","sizes":"512x512","type":"image/png","purpose":"any"}]}

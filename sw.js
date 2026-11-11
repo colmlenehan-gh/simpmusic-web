@@ -1,0 +1,6 @@
+// Cache only this application's static shell. Never cache third-party streams or API keys.
+const CACHE='simpmusic-web-shell-v1';
+const FILES=['./','./index.html','./style.css','./app.js','./core.js','./manifest.webmanifest','./assets/icon.png','./assets/poppins_regular.woff','./assets/poppins_medium.woff','./assets/poppins_bold.woff'];
+self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting())));
+self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('simpmusic-web-shell-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+self.addEventListener('fetch',e=>{const url=new URL(e.request.url);if(e.request.method!=='GET'||url.origin!==self.location.origin||!FILES.some(path=>new URL(path,self.registration.scope).href===url.href))return;e.respondWith(fetch(e.request).then(r=>{if(r.ok){const copy=r.clone();caches.open(CACHE).then(c=>c.put(e.request,copy));}return r;}).catch(()=>caches.match(e.request)));});
