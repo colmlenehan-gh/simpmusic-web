@@ -3,7 +3,7 @@
 SimpMusic is an open-source project by maxrave-dev and contributors:
 https://github.com/maxrave-dev/SimpMusic
 
-This unofficial browser adaptation retains the SimpMusic name for identification and reuses its rounded application icon and Poppins font files. Visual references include its desktop screenshot and theme definitions, notably seed #8ECAE6, favourite #FF4081, and desktop panel #121212. It is not an official SimpMusic release and does not imply endorsement.
+This unofficial browser adaptation retains the SimpMusic name for identification and reuses its rounded application icon and Poppins font files. The revision also mechanically ports 26 original SimpIcons ImageVectors, retaining their Kotlin sources under upstream-reference/icons, and uses HomeScreen, AdapterItems, AppBottomNavigationBar and Typo measurements. Visual references include its desktop screenshot and theme definitions, notably seed #8ECAE6, favourite #FF4081, and desktop panel #121212. It is not an official SimpMusic release and does not imply endorsement.
 
 Upstream GPL-3.0 terms are reproduced in LICENSE. Browser reimplementation and modifications: 2026, distributed under GPL-3.0-or-later. Full human-readable source for this web application is included. Upstream revision: c11ee6a38102b6065dd27b71cb12b0afef61f54a.
 

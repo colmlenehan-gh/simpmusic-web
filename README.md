@@ -2,6 +2,16 @@
 
 An **unofficial, partial browser reimplementation** of [SimpMusic](https://github.com/maxrave-dev/SimpMusic), using its Poppins typography, app icon, dark panel layout, cyan brand colour, and library/player structure. GPL-3.0-or-later. This is not an official release, a Kotlin-to-web compilation, or a feature-identical conversion.
 
+## Version 0.2: native source layout and Google account import
+
+The previous generic glyphs and layout have been replaced using actual upstream vector paths and layout measurements. See [SOURCE_MAPPING.md](SOURCE_MAPPING.md). Touch devices now use the native floating capsule plus detached Search button, including iPad landscape. The original 56dp header and four-row, 256dp quick-pick rail are reproduced. The mini-player and now-playing column stay hidden until a track is selected. New libraries start empty rather than with unrelated starter tracks.
+
+An account page now implements Google Identity Services and read-only YouTube Data API import: owned playlists, ordered available playlist tracks, liked videos, and authenticated search. API access tokens remain in memory and are never persisted or exported. Imported playlist snapshots remain on the device and do not modify YouTube.
+
+**Sign-in is not activated on this deployment yet:** a Google Web OAuth client ID must be registered for this origin. There is no pre-provisioned client in the original source that can be reused for this site. See [ACCOUNT_SETUP.md](ACCOUNT_SETUP.md) for the exact owner setup and current limitations. A registered client is a real external prerequisite, not an optional secret field that this implementation can invent.
+
+The official YouTube API is not a complete YouTube Music library API. Uploaded audio, saved Music albums, personal mixes and all Music-only collections are not supported by this account connection. Original Android login reads native WebView cookies; ordinary browser JavaScript cannot reuse that cookie access. This is still a source-informed web adaptation rather than a compiled native application.
+
 ## Run
 
 No build, npm dependencies, accounts, or paid services are required for local audio playback.
@@ -26,11 +36,11 @@ Do not open `index.html` as a `file://` URL: JavaScript modules, persistent stor
 - Offline application shell after the first successful online load; imported audio can play offline.
 - HTML escaping, restricted artwork hosts, strict YouTube URL parsing, and validated backup structure.
 
-The initial featured YouTube selection is curated starter content, not personalized recommendations or a live chart. Moods search by text; they do not classify local audio automatically. The mix is a shuffled local library, not YouTube radio. Local file labels are inferred from `Artist - Title.ext`; embedded ID3 tags are not parsed. Edit labels through the song menu.
+Existing libraries retain previously saved tracks. The Home page uses real local and imported data, not fabricated account recommendations. Moods search by text; they do not classify local audio automatically. The mix is a shuffled browser library, not YouTube radio. Local file labels are inferred from `Artist - Title.ext`; embedded ID3 tags are not parsed. Edit labels through the song menu.
 
 ## YouTube search
 
-Video URLs and starter embeds need no developer key. For online search, enable YouTube Data API v3 in your own Google Cloud project and enter a **browser-restricted key** in Settings. Restrict the key to your actual site origin/referrer and to YouTube Data API v3. The key is kept only in this browser’s local storage and sent to Google when searching; it is excluded from exports. Client-side keys cannot be hidden. Quota, authorization, network, embed, and regional failures are displayed rather than replaced with fake results.
+Video URLs need no developer key. When connected, search uses the account token; a separate optional key is available for signed-out search. For online search, enable YouTube Data API v3 in your own Google Cloud project and enter a **browser-restricted key** in Settings. Restrict the key to your actual site origin/referrer and to YouTube Data API v3. The key is kept only in this browser’s local storage and sent to Google when searching; it is excluded from exports. Client-side keys cannot be hidden. Quota, authorization, network, embed, and regional failures are displayed rather than replaced with fake results.
 
 Without a key, search covers the library and accepts YouTube links. There is no bundled shared credential and no proxy pretending to be YouTube Music.
 
@@ -41,12 +51,12 @@ Without a key, search covers the library and accepts YouTube links. There is no 
 | Native UI | Reimplemented in HTML/CSS; not pixel-identical or generated from Compose |
 | Local playback | Browser-decoded formats, IndexedDB storage |
 | YouTube playback | Official visible iframe, controlled by YouTube availability and advertising |
-| YouTube Music home/search/account | Curated home; optional public YouTube search; no Music account sync |
+| YouTube Music home/search/account | Source-derived layout, OAuth owned-playlist/liked-video import and authenticated search once a client ID is configured; no complete Music account sync |
 | Background/ad-free playback | Not guaranteed for YouTube; browser/OS policies apply |
 | Downloads | User-imported audio only; no YouTube extraction or offline downloads |
 | Lyrics | Local LRC and opt-in LRCLIB; no other provider integrations or translation |
 | Equalizer | Ten bands on local audio, with fixed -6 dB headroom; no AutoEq, delay, reverb, or iframe audio processing |
-| Playlists/favourites | Local device storage; no Google/Spotify synchronization |
+| Playlists/favourites | Local storage; read-only import and refresh of supported YouTube playlists/likes; no write-back or Spotify synchronization |
 | Analytics | Local playback observations while page runs; suspended browser time is not estimated |
 | Cast/Android Auto/widgets/device routing | Not implemented |
 | Shared rooms/Discord/Last.fm/SponsorBlock/AI | Not implemented |
@@ -72,7 +82,7 @@ npm test
 npm start
 ```
 
-Tests use Node’s built-in test runner; Node 20+ is recommended. Runtime itself has no npm dependencies. Core tests cover unsafe URLs, markup escaping, timed lyrics, backup validation, and invalid duration handling. Real-device audio, YouTube regional availability, restricted-key search, and mobile background behaviour need testing in their respective environments.
+Tests use Node’s built-in test runner; Node 20+ is recommended. Runtime itself has no npm dependencies. Eleven tests cover unsafe URLs, markup escaping, timed lyrics, backup validation, durations, OAuth configuration, paginated library reads, token handling, unavailable videos, repeated page tokens and disconnect/revocation. OAuth tests use mocks and do not establish live sign-in. Real-device audio, YouTube regional availability, restricted-key search, and mobile background behaviour need testing in their respective environments.
 
 ## Source and attribution
 
