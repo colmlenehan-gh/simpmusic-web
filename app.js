@@ -1,5 +1,5 @@
 // SimpMusic Web: unofficial browser adaptation, GPL-3.0-or-later.
-import {escapeHTML as esc, videoID, formatTime as time, parseLRC, validateBackup, safeImage} from './core.js';
+import {escapeHTML as esc, videoID, formatTime as time, parseLRC, validateBackup, safeImage} from './core.js?v=0.1.1';
 const $ = s => document.querySelector(s);
 const audio = $('#audio');
 const icons = {

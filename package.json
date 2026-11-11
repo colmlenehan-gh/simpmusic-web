@@ -1,1 +1,1 @@
-{"name":"simpmusic-web","version":"0.1.0","private":true,"type":"module","license":"GPL-3.0-or-later","scripts":{"start":"python3 -m http.server 8000","test":"node --test tests/*.test.js","check":"node --check app.js && node --check core.js && node --check sw.js"}}
+{"name":"simpmusic-web","version":"0.1.1","private":true,"type":"module","license":"GPL-3.0-or-later","scripts":{"start":"python3 -m http.server 8000","test":"node --test tests/*.test.js","check":"node --check app.js && node --check core.js && node --check sw.js"}}
