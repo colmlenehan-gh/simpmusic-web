@@ -22,3 +22,13 @@ Date: 11 November 2026.
 - Offline playback is implemented through IndexedDB and shell caching; a complete offline browser session was not tested.
 
 No claim of complete parity with the native SimpMusic app is made. See README.md for the feature matrix and native-only limitations.
+
+## Version 0.2 revision
+
+- Eleven automated tests pass, including read-only OAuth API mocks, pagination, header-only token use, revoked/expired sessions, playlist normalization and invalid configuration.
+- Deployed revision loaded the mechanically ported original icons and source-derived layout.
+- Avatar navigated to the new account screen. Missing OAuth client configuration was shown explicitly, with the exact deployment origin and no fake account session.
+- Existing browser data remained present; the previously imported WAV file started playing after the revision.
+- Live Google authorization and real private-library retrieval are not verified and remain blocked by an unprovisioned Google Web OAuth client ID.
+
+- Responsive fixture rendered at 390 CSS pixels (phone) and 1,024 CSS pixels (landscape tablet). Both displayed the detached Search circle, floating Home/Library capsule, native header and four-row scrollable picks. These are browser viewport checks, not tests on a physical iPad.
